@@ -20,6 +20,9 @@ class PartyList(APIView):
 
 
 class PartyDetail(APIView):
+    """
+    List individual party
+    """
     serializer_class = PartySerializer
     permission_classes = [IsOwnerOrReadOnly]
 
@@ -30,7 +33,7 @@ class PartyDetail(APIView):
             return party
         except Party.DoesNotExist:
             raise Http404
-    
+
     def get(self, request, pk):
         party = self.get_object(pk)
         serializer = PartySerializer(
@@ -47,3 +50,5 @@ class PartyDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
