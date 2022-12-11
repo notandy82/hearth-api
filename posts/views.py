@@ -30,6 +30,7 @@ class PostList(APIView):
             serializer.save(owner=request.user)
             return Response(serializer.errors, status=status.HTTP_201_CREATED)
 
+
 class PostDetail(APIView):
     """
     List individual posts
@@ -54,12 +55,12 @@ class PostDetail(APIView):
                 post, context={'request': request}
             )
             return Response(serializer.data)
-        
+
         def put(self, request, pk):
             post = self.get_object(pk)
             serializer = PostSerializer(
-            post, data=request.data, context={'request': request}
-        )
+                post, data=request.data, context={'request': request}
+            )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
