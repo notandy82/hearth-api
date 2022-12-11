@@ -11,7 +11,7 @@ class EventList(APIView):
     """
     List all events
     """
-    serializer_class = PartySerializer
+    serializer_class = EventSerializer
     permission_classes = [
         permissions.IsAuthenticated
     ]
