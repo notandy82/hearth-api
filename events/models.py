@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from parties.model import Party
+from parties.models import Party
 from django.utils.text import Truncator
 
 
