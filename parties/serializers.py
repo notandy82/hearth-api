@@ -13,6 +13,6 @@ class PartySerializer(serializers.ModelSerializer):
     class Meta:
         model = Party
         fields = [
-            'id', 'owner', 'created_at', 'updated_at', 'title',
+            'id', 'owner', 'created_at', 'title',
             'description', 'location', 'is_owner'
         ]
