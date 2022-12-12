@@ -22,5 +22,4 @@ urlpatterns = [
     path('', include('profiles.urls')),
     path('', include('parties.urls')),
     path('', include('posts.urls')),
-    path('', include('events.urls')),
 ]
