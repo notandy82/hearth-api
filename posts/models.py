@@ -18,7 +18,6 @@ class Post(models.Model):
         upload_to='images/', default='../default_post_rgq6aq', blank=True
     )
 
-
     class Meta:
         ordering = ['-created_at']
 
