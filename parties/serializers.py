@@ -5,6 +5,20 @@ from .models import Party
 class PartySerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
+    party_image = serializers.ReadOnlyField(source='party.image.url')
+
+    def validate_image(self, value):
+        if value.size > 4 * 1024 * 1024:
+            raise serializers.ValidationError('Image size larger than 4MB!')
+        if value.image.height > 4096:
+            raise serializers.ValidationError(
+                'Image height larger than 4096px!'
+            )
+        if value.image.width > 4096:
+            raise serializers.ValidationError(
+                'Image width larger than 4096px!'
+            )
+        return value
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -13,6 +27,6 @@ class PartySerializer(serializers.ModelSerializer):
     class Meta:
         model = Party
         fields = [
-            'id', 'owner', 'created_at', 'title',
-            'description', 'location', 'is_owner'
+            'id', 'owner', 'created_at', 'image', 'party_image',
+            'title', 'description', 'location', 'is_owner',
         ]

@@ -9,7 +9,7 @@ from hearth_api.permissions import IsOwnerOrReadOnly
 
 class PartyList(APIView):
     """
-    List all parties
+    List all parties or create a new party if logged in
     """
     serializer_class = PartySerializer
     permission_classes = [
