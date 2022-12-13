@@ -9,8 +9,11 @@ class Party(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
+    description = models.CharField(max_length=255, blank=True)
     location = models.CharField(max_length=50)
+    image = models.ImageField(
+        upload_to='images/', default='../default_post_q98lks', blank=True
+    )
 
     class Meta:
         ordering = ['-created_at']
