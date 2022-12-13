@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'profiles',
     'parties',
     'posts',
-    'events',
+    'dates',
 ]
 
 MIDDLEWARE = [

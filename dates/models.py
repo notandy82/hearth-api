@@ -6,7 +6,7 @@ from parties.models import Party
 
 class Event(models.Model):
     """
-    Stores info about events
+    Class for creating calendar events
     """
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     party = models.ForeignKey(Party, on_delete=models.CASCADE)
