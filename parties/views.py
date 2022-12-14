@@ -1,73 +1,25 @@
-from django.http import Http404
-from rest_framework import status, permissions
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework import generics, permissions
 from .models import Party
 from .serializers import PartySerializer
 from hearth_api.permissions import IsOwnerOrReadOnly
 
 
-class PartyList(APIView):
+class PartyList(generics.ListCreateAPIView):
     """
-    List all parties or create a new party if logged in
-    """
-    serializer_class = PartySerializer
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
-    ]
-
-    def get(self, request):
-        parties = Party.objects.all()
-        serializer = PartySerializer(
-            parties, many=True, context={'request': request}
-        )
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = PartySerializer(
-            data=request.data, context={'request': request}
-        )
-        if serializer.is_valid():
-            serializer.save(owner=request.user)
-            return Response(
-                serializer.data, status=status.HTTP_201_CREATED
-            )
-        return Response(
-            serializer.errors, status=status.HTTP_400_BAD_REQUEST
-        )
-
-
-class PartyDetail(APIView):
-    """
-    List individual party
+    List parties or create a new party if logged in
     """
     serializer_class = PartySerializer
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly,
-        IsOwnerOrReadOnly
-    ]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = Party.objects.all()
 
-    def get_object(self, pk):
-        try:
-            party = Party.objects.get(pk=pk)
-            self.check_object_permissions(self.request, party)
-            return party
-        except Party.DoesNotExist:
-            raise Http404
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
-    def get(self, request, pk):
-        party = self.get_object(pk)
-        serializer = PartySerializer(
-            party, context={'request': request}
-        )
-        return Response(serializer.data)
 
-    def put(self, request, pk):
-        party = self.get_object(pk)
-        serializer = PartySerializer(
-            party, data=request.data, context={'request': request}
-        )
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class PartyDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve a party, or update or delete it if owner
+    """
+    permission_classes = [IsOwnerOrReadOnly]
+    serializer_class = PartySerializer
+    queryset = Party.objects.all()

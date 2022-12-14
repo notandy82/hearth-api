@@ -1,10 +1,6 @@
-from django.http import Http404
-from django.shortcuts import render
-from rest_framework.views import APIView
 from .serializers import EventSerializer
 from .models import Event
-from rest_framework.response import Response
-from rest_framework import status, permissions, generics
+from rest_framework import permissions, generics
 from hearth_api.permissions import IsOwnerOrReadOnly
 
 
