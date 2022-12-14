@@ -3,7 +3,7 @@ from .models import Follower
 from django.db import IntegrityError
 
 
-class FollowerSerializer(serializers.ModelSerializer):
+class FollowingSerializer(serializers.ModelSerializer):
     """
     Serializer for the Follower model
     """
