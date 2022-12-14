@@ -37,6 +37,7 @@ class EventList(APIView):
             serializer.errors, status=status.HTTP_400_BAD_REQUEST
         )
 
+
 class EventDetail(APIView):
     """
     List individual party
