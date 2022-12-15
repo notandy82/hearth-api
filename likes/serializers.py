@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import Like
 
 
-class LikeSerializer(serializers.Serializer):
+class LikeSerializer(serializers.ModelSerializer):
     """
     Serializer for the Like model
     """
