@@ -1,3 +1,4 @@
+from django.db.models import Count
 from rest_framework import generics, permissions, filters
 from .models import Party
 from .serializers import PartySerializer
@@ -10,9 +11,14 @@ class PartyList(generics.ListCreateAPIView):
     """
     serializer_class = PartySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Party.objects.all()
+    queryset = Party.objects.annotate(
+        posts_count=Count('post', distinct=True),
+    ).order_by('-created_at')
     filter_backends = [
-        filters.SearchFilter
+        filters.SearchFilter,
+    ]
+    ordering_fields = [
+        'posts_count'
     ]
     search_fields = [
         'owner__username',
