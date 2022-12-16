@@ -1,6 +1,6 @@
 from django.db.models import Count
 from .models import Post
-from rest_framework import permissions, generics
+from rest_framework import permissions, generics, filters
 from .serializers import PostSerializer
 from hearth_api.permissions import IsOwnerOrReadOnly
 
@@ -12,11 +12,17 @@ class PostList(generics.ListCreateAPIView):
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Post.objects.annotate(
-        comments_count=Count('likes', distinct=True),
-        likes_count=Count('comments', distinct=True)
+        comments_count=Count('comment', distinct=True),
+        likes_count=Count('likes', distinct=True)
     ).order_by('-created_at')
     filter_backends = [
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
+    search_fields = [
+        'owner__username',
+        'title',
+        'party__title'
     ]
     ordering_fields = [
         'likes_count',
@@ -35,8 +41,8 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.annotate(
-        comments_count=Count('likes', distinct=True),
-        likes_count=Count('comments', distinct=True)
+        comments_count=Count('comment', distinct=True),
+        likes_count=Count('likes', distinct=True)
     ).order_by('-created_at')
     filter_backends = [
         filters.OrderingFilter
