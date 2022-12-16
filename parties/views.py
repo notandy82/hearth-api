@@ -13,6 +13,7 @@ class PartyList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Party.objects.annotate(
         posts_count=Count('post', distinct=True),
+        followers_count=Count('followed__owner', distinct=True),
     ).order_by('-created_at')
     filter_backends = [
         filters.SearchFilter,
@@ -37,4 +38,6 @@ class PartyDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = PartySerializer
-    queryset = Party.objects.all()
+    queryset = Party.objects.annotate(
+        posts_count=Count('post', distinct=True),
+    ).order_by('-created_at')

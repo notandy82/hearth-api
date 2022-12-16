@@ -10,6 +10,7 @@ class PartySerializer(serializers.ModelSerializer):
     party_image = serializers.ReadOnlyField(source='party.image.url')
     following_id = serializers.SerializerMethodField()
     posts_count = serializers.ReadOnlyField()
+    followers_count = serializers.ReadOnlyField()
 
     def validate_image(self, value):
         if value.size > 4 * 1024 * 1024:
@@ -42,5 +43,5 @@ class PartySerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'created_at', 'image', 'party_image',
             'title', 'description', 'location', 'is_owner',
-            'following_id', 'posts_count'
+            'following_id', 'posts_count', 'followers_count'
         ]
