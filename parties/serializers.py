@@ -1,11 +1,14 @@
 from rest_framework import serializers
 from .models import Party
+from profiles.models import Profile
+from following.models import Following
 
 
 class PartySerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     party_image = serializers.ReadOnlyField(source='party.image.url')
+    following_id = serializers.SerializerMethodField()
 
     def validate_image(self, value):
         if value.size > 4 * 1024 * 1024:
@@ -24,9 +27,18 @@ class PartySerializer(serializers.ModelSerializer):
         request = self.context['request']
         return request.user == obj.owner
 
+    def get_following_id(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            following = Following.objects.filter(
+                owner=user, followed=obj.id
+            ).first()
+            return following.id if following else None
+        return None
+
     class Meta:
         model = Party
         fields = [
             'id', 'owner', 'created_at', 'image', 'party_image',
-            'title', 'description', 'location', 'is_owner',
+            'title', 'description', 'location', 'is_owner', 'following_id'
         ]
