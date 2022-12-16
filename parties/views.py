@@ -22,7 +22,7 @@ class PartyList(generics.ListCreateAPIView):
         DjangoFilterBackend
     ]
     # filterset_fields = [
-    #     'title__followed__owner__profile'
+    #     'id__followed__owner__profile'
     # ]
     ordering_fields = [
         'posts_count'
