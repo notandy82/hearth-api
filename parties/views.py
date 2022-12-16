@@ -1,6 +1,8 @@
 from django.db.models import Count
 from rest_framework import generics, permissions, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Party
+from following.models import Following
 from .serializers import PartySerializer
 from hearth_api.permissions import IsOwnerOrReadOnly
 
@@ -17,7 +19,11 @@ class PartyList(generics.ListCreateAPIView):
     ).order_by('-created_at')
     filter_backends = [
         filters.SearchFilter,
+        DjangoFilterBackend
     ]
+    # filterset_fields = [
+    #     'title__followed__owner__profile'
+    # ]
     ordering_fields = [
         'posts_count'
     ]
