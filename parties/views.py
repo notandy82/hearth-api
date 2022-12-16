@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from .models import Party
 from .serializers import PartySerializer
 from hearth_api.permissions import IsOwnerOrReadOnly
@@ -11,6 +11,15 @@ class PartyList(generics.ListCreateAPIView):
     serializer_class = PartySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Party.objects.all()
+    filter_backends = [
+        filters.SearchFilter
+    ]
+    search_fields = [
+        'owner__username',
+        'title',
+        'description',
+        'location'
+    ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
