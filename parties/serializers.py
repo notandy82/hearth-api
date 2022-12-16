@@ -40,5 +40,6 @@ class PartySerializer(serializers.ModelSerializer):
         model = Party
         fields = [
             'id', 'owner', 'created_at', 'image', 'party_image',
-            'title', 'description', 'location', 'is_owner', 'following_id'
+            'title', 'description', 'location', 'is_owner',
+            'following_id'
         ]
