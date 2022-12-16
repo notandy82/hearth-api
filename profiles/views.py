@@ -1,22 +1,26 @@
-from django.http import Http404
-from rest_framework import status, generics
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from django.db.models import Count
+from rest_framework import generics, filters
 from .models import Profile
 from .serializers import ProfileSerializer
 from hearth_api.permissions import IsOwnerOrReadOnly
 
 
-class ProfileList(APIView):
+class ProfileList(generics.ListAPIView):
     """
     List all profiles
     """
-    def get(self, request):
-        profiles = Profile.objects.all()
-        serializer = ProfileSerializer(
-            profiles, many=True, context={'request': request}
-        )
-        return Response(serializer.data)
+    queryset = Profile.objects.annotate(
+        posts_count=Count('owner__post', distinct=True),
+        parties_count=Count('owner__party', distinct=True)
+    ).order_by('-created_at')
+    serializer_class = ProfileSerializer
+    filter_backends = [
+        filters.OrderingFilter
+    ]
+    ordering_fields = [
+        'posts_count',
+        'parties_count'
+    ]
 
 
 class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
