@@ -3,6 +3,7 @@ from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Party
 from following.models import Following
+from profiles.models import Profile
 from .serializers import PartySerializer
 from hearth_api.permissions import IsOwnerOrReadOnly
 
@@ -21,9 +22,9 @@ class PartyList(generics.ListCreateAPIView):
         filters.SearchFilter,
         DjangoFilterBackend
     ]
-    # filterset_fields = [
-    #     'id__followed__owner__profile'
-    # ]
+    filterset_fields = [
+        'followed__owner__profile'
+    ]
     ordering_fields = [
         'posts_count'
     ]
