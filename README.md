@@ -1,6 +1,6 @@
 # The Hearth of the Dungeon API
 
-Tabletop games, while always popular, have greatly increased in popularity over the last several years. Libraries, cafés, and sometimes bars will have game nights, while families and groups of friends will meet wherever they can to play.  During the pandemic, people turned to playing their games online using virtual tabletops
+Tabletop games, while always popular, have greatly increased in popularity over the last several years. This is also true of tabeltop role-playing games, such as Dungeons & Dragons, Pathfinder, and a host of others. Libraries, bookstores, cafés, and sometimes bars host game nights, while families and groups of friends will meet wherever they can to play. During the COVID-19 pandemic, people turned to playing their games online using virtual tabletops. The purpose of this site is to enable people to find new groups to play with and for those already in groups to be able to engage in discussion regarding their games. Groups can be created by users and can then be followed. Users can post images and conversation topics to these groups, with commenting and liking available. A group owner can also post event notifications to their group.
 Live demo [_here_](https://notandy82-hearth-api.herokuapp.com/)
 
 
@@ -34,13 +34,32 @@ Live demo [_here_](https://notandy82-hearth-api.herokuapp.com/)
 
 ### Existing Features
 
-- 
+- Profiles
+  - Users are able to sign up to view the site. They can include their name, an image, and a short description of themselves.
+
+- Parties
+  - The party is the focal point of the site. Users can create a party. Within the party, images and comments can be uploaded, and comments can be made on these. Events can also be scheduled within the party. Users can then follow these parties. Posts and events will then be displayed on their feed. The main information for each party includes a name, a description, an image, and a location.
+
+- Posts
+  - Users can post images or discussion to parties that they are following.
+
+- Comments
+  - Users can post comments on other users' posts
+
+- Likes
+  - Users can 'like' another user's post. The number of likes on each post is displayed on the post.
+
+- Following
+  - Users are able to follow parties. This will result in any posts and dates made for that party to display in their feed.
+
+- Dates
+  - A party owner can create events so that followers will know when the party is having a game night.
 
 - Admin Panel
-  - The admin panel provides the admin with the ability to manage users, groups, and posts
+  - The admin panel provides the admin with the ability to manage users, groups, and posts.
 
 ### Features to Implement
-- A
+- Allowing party owners to approve any party follower (this would then change to party members).
 
 
 ## Technologies Used
@@ -53,10 +72,9 @@ Live demo [_here_](https://notandy82-hearth-api.herokuapp.com/)
 - GitPod for building and editing code
 - GitHub for storing code and deploying site
 - Git for version control
-- Django as a site framework
+- Django REST framework
 - Django allauth and dj-rest-auth for user verification
 - Balsamiq for initial development
-- Favicon.io for favicon generating
 - Heroku for project deployment
 - ElephantSQL for database management
 - Cloudinary for image hosting
