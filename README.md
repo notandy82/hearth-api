@@ -25,9 +25,12 @@ Live demo [_here_](https://notandy82-hearth-api.herokuapp.com/)
 
 -User
  - As a user, I would like to be able to create a user account on the site.
- - As a user, I would like to be able to create multiple bookings for the event.
- - As a user, I would like to be able to review and edit my bookings.
- - As a user, I would like to know how much the event will cost.
+ - As a user, I would like to be able to create a party or multiple parties for managing conversation related to my games.
+ - As a user, I would like to be able to create posts to engage in discussion on my games.
+ - As a user, I would like to be able to schedule events for my party.
+ - As a user I would like to be able to follow parties so that I can be informed of topics in different groups.
+ - As a user, I would like to be able to like posts so that I can show my interest in topics.
+ - As a user, I would like to be able to make comments on posts so that I can further engage in conversation on topics.
 
 
 ## Features
